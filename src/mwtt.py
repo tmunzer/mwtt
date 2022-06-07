@@ -120,8 +120,6 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
         content = req.get_json()
         console.debug(content)
         topic = content["topic"]
-        console.critical(channels)
-        console.critical(channels.get(topic))
         if len(channels.get(topic, {})) == 0:
             console.warning(f"topic {topic} is not configured for this org")
             return '', 404
