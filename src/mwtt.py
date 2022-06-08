@@ -115,24 +115,25 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
     if secret and signature != digester:
         console.error("Webhook signature doesn't match")
         return '', 401
-    else:
-        console.info("Processing new webhook message")
-        content = req.get_json()
-        console.debug(content)
-        topic = content["topic"]
-        if len(channels.get(topic, {})) == 0:
-            console.warning(f"topic {topic} is not configured for this org")
-            return '', 404
-    
-        console.info(f"Message topic: {topic}")
-        events = content["events"]
-        for event in events:
-            _process_event(
-                topic,
-                event,
-                mist_conf,
-                channels,
-                slack_conf,
-                msteams_conf
-            )
-        return '', 200
+    elif secret:
+        console.info("WEbhook signature confirmed")
+    console.info("Processing new webhook message")
+    content = req.get_json()
+    console.debug(content)
+    topic = content["topic"]
+    if len(channels.get(topic, {})) == 0:
+        console.warning(f"topic {topic} is not configured for this org")
+        return '', 404
+
+    console.info(f"Message topic: {topic}")
+    events = content["events"]
+    for event in events:
+        _process_event(
+            topic,
+            event,
+            mist_conf,
+            channels,
+            slack_conf,
+            msteams_conf
+        )
+    return '', 200
