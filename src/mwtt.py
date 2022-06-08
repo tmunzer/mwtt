@@ -106,8 +106,8 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
     msteams_conf    obj             MsTeams configuration (enable: bool, default_url: str, url: {})
     console         console
     '''
-    secret = mist_conf.get("secret", None)
-    if True:
+    secret = mist_conf.get("mist_secret", None)
+    if secret:
         signature = req.headers['X-Mist-Signature-v2'] if "X-Mist-Signature-v2" in req.headers else None
         key = str.encode(secret)
         message = req.data
