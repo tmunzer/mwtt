@@ -163,7 +163,7 @@ event_channels = {
     'SW_RECOVERY_SNAPSHOT_FAILED': "warning",
     'SW_RECOVERY_SNAPSHOT_NOTNEEDED': "warning",
     'SW_RECOVERY_SNAPSHOT_UNSUPPORTED': "info",
-    "SW_DOT1XD_USR_AUTHENTICATED": "debug",
+    "SW_DOT1XD_USER_AUTHENTICATED": "debug",
     "SW_RADIUS_SERVER_UNREACHABLE": "warning",
 
     "ME_CLAIMED": "warning",
