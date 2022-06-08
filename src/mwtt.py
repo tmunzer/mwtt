@@ -114,6 +114,9 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
         digester = hmac.new(key, message, hashlib.sha256).hexdigest()
     if secret and signature != digester:
         console.error("Webhook signature doesn't match")
+        console.debug(f"message: {req.data}")
+        console.debug(f"secret: {secret}")
+        console.debug(f"signature: {signature}")
         return '', 401
     elif secret:
         console.info("Webhook signature confirmed")
