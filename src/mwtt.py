@@ -116,7 +116,7 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
         console.error("Webhook signature doesn't match")
         return '', 401
     elif secret:
-        console.info("WEbhook signature confirmed")
+        console.info("Webhook signature confirmed")
     console.info("Processing new webhook message")
     content = req.get_json()
     console.debug(content)
