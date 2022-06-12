@@ -8,6 +8,7 @@ def audit(mist_host, approved_admins, audit_channels, event):
     url = None
     actions = []
     message = None
+    admin = None
 
     if "admin_name" in event:
         admin = event["admin_name"]
