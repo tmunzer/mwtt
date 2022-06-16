@@ -114,19 +114,19 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
     console         console
     '''
     secret = mist_conf.get("mist_secret", None)
-    # if secret:
-    #     signature = req.headers['X-Mist-Signature-v2'] if "X-Mist-Signature-v2" in req.headers else None
-    #     key = str.encode(secret)
-    #     message = req.data
-    #     digester = hmac.new(key, message, hashlib.sha256).hexdigest()
-    # if secret and signature != digester:
-    #     console.error("Webhook signature doesn't match")
-    #     console.debug(f"message: {req.data}")
-    #     console.debug(f"secret: {secret}")
-    #     console.debug(f"signature: {signature}")
-    #     return '', 401
-    # elif secret:
-    #     console.info("Webhook signature confirmed")
+    if secret:
+        signature = req.headers['X-Mist-Signature-v2'] if "X-Mist-Signature-v2" in req.headers else None
+        key = str.encode(secret)
+        message = req.data
+        digester = hmac.new(key, message, hashlib.sha256).hexdigest()
+    if secret and signature != digester:
+        console.error("Webhook signature doesn't match")
+        console.debug(f"message: {req.data}")
+        console.debug(f"secret: {secret}")
+        console.debug(f"signature: {signature}")
+        return '', 401
+    elif secret:
+        console.info("Webhook signature confirmed")
     console.info("Processing new webhook message")
     content = req.get_json()
     console.debug(content)
