@@ -256,3 +256,16 @@ audit_channels = {
     "approved_admins": "debug",
     "other_admins": "critical"
 }
+
+mxedge_events = {
+    "ME_CONFIG_CHANGED_BY_USER": "info",
+    "ME_SERVICE_STOPPED": "debug",
+    "ME_SERVICE_STARTED": "debug",
+    "ME_SERVICE_RESTARTED": "debug",
+    "ME_SERVICE_FAILED": "critical",
+    "TT_TUNNELS_LOST": "warning",
+    "ME_PACKAGE_INSTALLED": "info",
+    "ME_PACKAGE_UPDATE_BY_USER": "info",
+    "ME_RESTARTED": "info",
+    "ME_RESOURCE_USAGE": "warning"
+}
