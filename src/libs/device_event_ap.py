@@ -4,6 +4,7 @@ from .device_event_common import CommonEvent
 class ApEvent(CommonEvent):
 
     def __init__(self, mist_host, message_levels, event):
+        CommonEvent.__init__(self, mist_host, message_levels, event)
         self.band = event.get("band", None)
         self.post_channel = event.get("channel", None)
         self.post_bandwidth = event.get("bandwidth", None)
@@ -12,7 +13,6 @@ class ApEvent(CommonEvent):
         self.pre_bandwidth = event.get("pre_bandwidth", None)
         self.pre_power = event.get("pre_power", None)
         self.occurrence = event.get("occurrence", None)
-        CommonEvent.__init__(self, mist_host, message_levels, event)
 
 
     def _process(self):
@@ -74,7 +74,7 @@ class ApEvent(CommonEvent):
     "ap": "5c5b35000001"
 }
         '''
-        self.text = f"Configuration for AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"Configuration for AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text +=  f" on site \"{self.site_name}\""
         self.text += " changed by RRM."
@@ -92,7 +92,7 @@ class ApEvent(CommonEvent):
     19/05/2020 00:21:04 INFO: timestamp: 1589847656
     19/05/2020 00:21:04 INFO: type: 1026
         '''
-        self.text = f"Event 1026 for AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"Event 1026 for AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
 
@@ -115,7 +115,7 @@ class ApEvent(CommonEvent):
     "reason": "radar-detected"
 }
         '''
-        self.text = f"RRM CHANGES in {self.band}GHz for the AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"RRM CHANGES in {self.band}GHz for the AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
         self.info.append(f"*Channel*: {self.pre_channel} -> {self.post_channel}")
@@ -136,7 +136,7 @@ class ApEvent(CommonEvent):
     "occurrence": 747
 }
         '''
-        self.text = f"{self.occurrence} BEANCON STUCK in {self.band}GHz for the AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"{self.occurrence} BEANCON STUCK in {self.band}GHz for the AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
 
@@ -157,7 +157,7 @@ class ApEvent(CommonEvent):
     "reason": "radar-detected"
 }
         '''
-        self.text = f"RADAR DETECTED on channel {self.pre_channel}/{self.pre_bandwidth}MHz by the AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"RADAR DETECTED on channel {self.pre_channel}/{self.pre_bandwidth}MHz by the AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
         self.info.append(f"*Channel*: {self.pre_channel} -> {self.post_channel}")
@@ -174,7 +174,7 @@ class ApEvent(CommonEvent):
     "ap": "5c5b35000001"
 }
         '''
-        self.text = f"AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
         self.text += " UPGRADED BY SCHEDULE POLICY"
@@ -190,6 +190,6 @@ class ApEvent(CommonEvent):
     "device_type": "ap"
 }
         '''
-        self.text = f"SUPPORT FILE RETRIEVED for AP \"{self. device_name}\" (MAC: {self.device_mac})"
+        self.text = f"SUPPORT FILE RETRIEVED for AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""

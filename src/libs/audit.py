@@ -1,7 +1,6 @@
 from .logger import Console
 
 def audit(mist_host, approved_admins, audit_channels, event):
-    console = Console("audit")
     mist_dashboard = mist_host.replace("api", "manage")
     org_id = None
     site_id = None

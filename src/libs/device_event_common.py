@@ -13,6 +13,7 @@ class CommonEvent():
     '''
 
     def __init__(self, mist_host, event_channels, event):
+        self.event_channels = event_channels
         self.console = Console("event")
         self.device_types = {
             "ap": {"short": "AP_", "text": "AP", "insight": "device"},
@@ -70,10 +71,7 @@ class CommonEvent():
         self.t_stop = int(datetime.timestamp(d_stop))
         self.t_start = int(datetime.timestamp(d_start))
 
-        self._message_channel(event_channels)
-        # self._text()
-        self._process()
-        self._actions()
+
 
     def get(self):
         '''
@@ -87,6 +85,10 @@ class CommonEvent():
                 info        message additional info
                 actions     message buttons
         '''
+        self._message_channel(self.event_channels)
+        # self._text()
+        self._process()
+        self._actions()
         data = {
             "channel": self.channel,
             "title": self.title,
@@ -106,6 +108,8 @@ class CommonEvent():
             self.channel = event_channels[self.event["type"]]
 
     def _actions(self):
+        print("action")
+        print(self.event.get('audit_id'))
         if self.device_type:
             if self.audit_id:
                 self.info.append("Check the audit logs for more details.")
@@ -115,20 +119,21 @@ class CommonEvent():
                 self.actions.append(
                     {"tag": "audit", "text": "Audit Logs", "url": url_audit})
             if not self.event["type"].replace(self.device_type, "") == "UNASSIGNED":
-                if self.device_insight:
-                    url_insights = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!dashboard/insights/{self.device_insight}/{self.device_id}/24h/{self.t_start}/{self.t_stop}/{self.site_id}"
-                    self.actions.append({
-                        "tag": "insights",
-                        "text": f"{self.device_text} Insights",
-                        "url": url_insights
-                    })
-                if self.device_type:
-                    url_conf = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!{self.device_type}/detail/{self.device_id}/{self.site_id}"
-                    self.actions.append({
-                        "tag": "insights",
-                        "text": f"{self.device_text} Configuration",
-                        "url": url_conf
-                    })
+                if self.site_id:
+                    if self.device_insight:
+                        url_insights = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!dashboard/insights/{self.device_insight}/{self.device_id}/24h/{self.t_start}/{self.t_stop}/{self.site_id}"
+                        self.actions.append({
+                            "tag": "insights",
+                            "text": f"{self.device_text} Insights",
+                            "url": url_insights
+                        })
+                    if self.device_type:
+                        url_conf = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!{self.device_type}/detail/{self.device_id}/{self.site_id}"
+                        self.actions.append({
+                            "tag": "insights",
+                            "text": f"{self.device_text} Configuration",
+                            "url": url_conf
+                        })
 
     def _common(self):
         '''
@@ -312,7 +317,7 @@ class CommonEvent():
     "audit_id": "e9a88814-fa81-5bdc-34b0-84e8735420e5"
 }
         '''
-        self.text = f"CONFIGURATION CHANGED for the {self.device_text} \"{self.device_name}\" (MAC: {self.device_name})"
+        self.text = f"CONFIGURATION CHANGED by user for the {self.device_text} \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
 

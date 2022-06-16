@@ -5,9 +5,9 @@ from .device_event_common import CommonEvent
 class SwitchEvent(CommonEvent):
 
     def __init__(self, mist_host, message_levels, event):
+        CommonEvent.__init__(self, mist_host, message_levels, event)
         self.vc_master_id = event.get("vc-master-id", None)
         self.vc_backup_id = event.get("vc-backup-id", None)
-        CommonEvent.__init__(self, mist_host, message_levels, event)
 
     def _process(self):
         if self.event_type in ["SW_CLAIMED", "SW_UNCLAIMED"]:

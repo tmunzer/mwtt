@@ -3,7 +3,6 @@ from .logger import Console
 
 
 def device_updown(mist_host, updown_channels, event):
-    console = Console("updown")
 
     mist_dashboard = mist_host.replace("api", "manage")
     org_id = event.get("org_id", None)
