@@ -22,6 +22,16 @@ class MxEdgeEvent(CommonEvent):
         self.component =event.get("component", "Unknown")
         self.port =event.get("port", "Unknown")
         self.lag =event.get("lag", "Unknown")
+        if "usage" in event:
+            self.severity = event["usage"].get("severity")
+            self.resource = event["usage"].get("resource")
+        elif "sys_info.usage" in event:
+            self.severity = event["sys_info.usage"].get("severity")
+            self.resource = event["sys_info.usage"].get("resource")
+        else:
+            self.severity = "Unknown"
+            self.resource = "Unknown"
+
 
         self.device_mac = self.device_id.split('-')[4]
         self.cluster_id = event.get("mxcluster_id")
@@ -231,8 +241,8 @@ class MxEdgeEvent(CommonEvent):
             "port": "port0"
         }
         """
-        tmp = self.event_type.replace("TT", "TUNTERM").split("_")
-        self.text = f"{' '.join(tmp[:-1])} {self.port} {tmp[-1:]} on Mist Edge \"{self.device_name}\""
+        tmp = self.event_type.replace("TT_PORT_", "").replace("_", " ")
+        self.text = f"TUNTERM PORT {self.port} {tmp} on Mist Edge \"{self.device_name}\""
         if self.site_name:
             self.text +=  f" on site \"{self.site_name}\""
 
@@ -309,8 +319,8 @@ class MxEdgeEvent(CommonEvent):
             "port": "port0"
         }
         """
-        tmp = self.event_type.replace("TT", "TUNTERM").split("_")
-        self.text = f"{' '.join(tmp[:-1])} {self.port} {tmp[-1:]} from LAG {self.lag} on Mist Edge \"{self.device_name}\""
+        tmp = self.event_type.replace("TT_PORT_", "").replace("_", " ")
+        self.text = f"TUNTERM PORT {self.port} {tmp} from LAG {self.lag} on Mist Edge \"{self.device_name}\""
         if self.site_name:
             self.text +=  f" on site \"{self.site_name}\""
 
@@ -497,7 +507,7 @@ class MxEdgeEvent(CommonEvent):
             "type": "ME_RESOURCE_USAGE"
         }
         '''
-        self.text = f"{self.usage['resource']} usage on Mist Edge \"{self.device_name}\" is {self.usage['severity']}"
+        self.text = f"{self.resource} usage on Mist Edge \"{self.device_name}\" is {self.severity}"
         if self.site_name:
             self.text +=  f" on site \"{self.site_name}\""
 

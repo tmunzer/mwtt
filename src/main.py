@@ -11,6 +11,7 @@ from config import msteams_conf
 from config import event_channels
 from config import updown_channels
 from config import alarm_channels
+from config import mxedge_events
 from config import audit_channels
 ###########################
 # APP SETTINGS
@@ -87,6 +88,7 @@ def postJsonHandler():
             "device-events": event_channels,
             "device-updowns": updown_channels,
             "alarms": alarm_channels,
+            "mxedge-events": mxedge_events,
             "audits": audit_channels
         },
         slack_conf,
