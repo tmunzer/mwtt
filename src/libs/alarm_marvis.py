@@ -5,19 +5,13 @@ from .alarm_common import CommonAlarm
 class MarvisAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
-        self.email = None
-        self.category = None
-        self.status = "UNKNOWN"
-        self.action = None
-        self.symptom = None
+        self.status = event.get("status", "Unknown")
+        self.category = event.get("category")
+        self.root_cause = event.get("root_case")
+        self.suggestion = event.get("suggestion", "Unknown")
+        self.impacted_entities = event.get("impacted_entities", [])
 
-        if "email_content" in event:
-            self.email = event["email_content"]
-            self.category = event["email_content"].get("category", None)
-        if "details" in event:
-            self.status = event["details"].get("status", None)
-            self.action = event["details"].get("action", None)
-            self.symptom = event["details"].get("symptom", None)
+
         CommonAlarm.__init__(self, mist_host, alarm_channels, event)
 
     def _process(self):
@@ -29,7 +23,11 @@ class MarvisAlarm(CommonAlarm):
             "negotiation_mismatch", "gw_negotiation_mismatch",
             "ap_offline",
             "non_compliant",
-            "health_check_failed"
+            "health_check_failed",
+            "bad_wan_uplink",
+            "switch_stp_loop",
+            "insufficient_coverage",
+            "insufficient_capacity"
         ]:
             self._marvis()
         else:
@@ -39,25 +37,17 @@ class MarvisAlarm(CommonAlarm):
         """
         """
         self.text = f"MARVIS {self.alarm_type.replace('_', ' ').upper()} issue on site {self.site_name}"
-        done = []
+        
+        self.info.append(f"*STATUS*: {self.status}")
         if self.category:
             self.info.append(f"*CATEGORY*: {self.category}")
-            done.append("category")
-        if self.status:
-            self.info.append(f"*STATUS*: {self.status}")
-            done.append("status")
-        if self.action:
-            self.info.append(f"*ACTION*: {self.action}")
-            done.append("action")
-        if self.symptom:
-            self.info.append(f"*SYMPTOM*: {self.symptom}")
-            done.append("symptom")
-        if self.email:
-            for entry in self.email:
-                if not entry in done:
-                    if isinstance(self.email[entry], list):
-                        self.info.append(
-                            f"*{entry.replace('_', ' ').upper()}*: {', '.join(self.email[entry])}")
-                    else:
-                        self.info.append(
-                            f"*{entry.replace('_', ' ').upper()}*: {self.email[entry]}")
+        if self.root_cause:
+            self.info.append(f"*ROOT CAUSE*: {self.root_cause}")
+        if self.suggestion:
+            self.info.append(f"*SUGGESTION*: {self.suggestion}")
+        self.info.append(f"*IMPACTED ENTITIES:* {len(self.impacted_entities)}")
+        for entry in self.impacted_entities:
+            tmp = ""
+            for key in entry:
+                tmp += f"\r\n> {key.replace('_', ' ')}: {entry[key]}"
+            self.info.append(tmp)

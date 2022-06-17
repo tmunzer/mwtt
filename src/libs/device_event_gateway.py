@@ -30,7 +30,7 @@ class GatewayEvent(CommonEvent):
             self._connected()
         elif self.event_type =="GW_RESTARTED":
             self._restarted()
-        elif self.event_type =="GW_RESTARTED_BY_USER":
+        elif self.event_type in ["GW_RESTARTED_BY_USER", "GW_RESTART_BY_USER"]:
             self._restarted_by_user()
         elif self.event_type == "GW_DISCONNECTED_LONG":
             self._disconnected_long()
@@ -48,6 +48,8 @@ class GatewayEvent(CommonEvent):
             self._alarm()
         elif self.event_type == "GW_UPGRADE_BY_USER":
             self._upgrade_by_user()
+        elif self.event_type == "GW_UPGRADE_BY_MIST":
+            self._upgrade_by_mist()
         elif self.event_type == "GW_UPGRADED":
             self._upgraded()
         elif self.event_type == "GW_UPGRADE_PENDING":
@@ -70,8 +72,10 @@ class GatewayEvent(CommonEvent):
             self._rejected()
         elif self.event_type == "GW_RG_STATE_CHANGED":
             self._gw_rg_state()
-        elif self.event_type == "GW_PORT_RG_STATE_CHANGED":
+        elif self.event_type in ["GW_PORT_RG_STATE_CHANGED", "GW_PORT_RG_ST_CHANGED"]:
             self._gw_port_rg_state()
+        elif self.event_type == "GW_ALARM_POE_CONTROLLER_UPGRADE_AVAILABLE":
+            self._poe_upgrade_available()
         else:
             self._common()
 
@@ -204,3 +208,5 @@ class GatewayEvent(CommonEvent):
         self.text = f"PORT REDUNDANCY GROUP STATE CHANGED for the Gateway \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
+        self.info.append(self.event_text)
+

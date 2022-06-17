@@ -13,6 +13,11 @@ class ApEvent(CommonEvent):
         self.pre_bandwidth = event.get("pre_bandwidth", None)
         self.pre_power = event.get("pre_power", None)
         self.occurrence = event.get("occurrence", None)
+        self.ssid = event.get("ssid", None)
+        self.old_server = event.get("old_server", None)
+        self.new_server = event.get("new_server", None)
+        self.apfw = event.get("apfw", None)
+        self.type_code = event.get("type_code", None)
 
 
     def _process(self):
@@ -60,6 +65,10 @@ class ApEvent(CommonEvent):
             self._cert_regenerated()
         elif self.event_type == "AP_GET_SUPPORT_FILES":
             self._ap_support_file()
+        elif self.event_type in ["AP_RADIUS_ACCOUNTING_SERVER_CHANGE", "AP_RADIUS_AUTHENTICATION_SERVER_CHANGE"]:
+            self._radius_server_change()
+        elif self.event_type in ["AP_RADSEC_FAILURE", "AP_RADSEC_SERVER_CHANGE", "AP_RADSEC_RECOVERY"]:
+            self._radsec()
         else:
             self._common()
 
@@ -193,3 +202,79 @@ class ApEvent(CommonEvent):
         self.text = f"SUPPORT FILE RETRIEVED for AP \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
+
+    def _radius_server_change(self):
+        '''
+        {
+            "org_id": "442f2ff3-b121-40ff-9443-d753ab96463c",
+            "site_id": "2e28d07a-ac92-435c-bad8-3cddba3d9b17",
+            "wlan_id": "7d88910f-bfd6-47b6-883a-db8f91bae74c",
+            "type": "AP_RADIUS_ACCOUNTING_SERVER_CHANGE",
+            "old_server": "7.7.7.7:8888",
+            "new_server": "1.2.3.5:1235",
+            "ssid": "RADIUS_TEST",
+            "ap": "d420b0f1030c",
+            "timestamp": 1651515384
+        }
+        '''
+        tmp = self.event_type.replace("AP_", "").replace("_", " ")
+        self.text  = f"{tmp} for SSID \"{self.ssid}\" from {self.old_server} to {self.new_server}"
+        if self.site_name:
+            self.text += f" on site \"{self.site_name}\""
+
+    def _radsec(self):
+        '''
+{
+            "wlan_id": "b19ce109-1f86-4d9b-bdff-19a08d94655d",
+            "type": "AP_RADSEC_FAILURE",
+            "device_type": "ap",
+            "version": 1,
+            "apfw": "0.12.26260",
+            "mac": "d420b0f1030c",
+            "ap": "d420b0f1030c",
+            "timestamp": 1654148714.073,
+            "org_id": "442f2ff3-b121-40ff-9443-d753ab96463c",
+            "site_id": "2e28d07a-ac92-435c-bad8-3cddba3d9b17",
+            "model": "AP45-US",
+            "text": "Radsec client cert format error",
+            "type_code": 38
+        }
+        {
+            "wlan_id": "06dac5f2-a8b9-4e56-872e-cd1c1d55267c",
+            "type": "AP_RADSEC_SERVER_CHANGE",
+            "device_type": "ap",
+            "version": 1,
+            "apfw": "apfw-0.12.26260-lollys-ca00",
+            "ap": "d420b0f103e8",
+            "mac": "d420b0f103e8",
+            "timestamp": 1654148714.073,
+            "org_id": "f2695c32-0e83-4936-b1b2-96fc88051213",
+            "site_id": "85d94e1f-3629-46b9-85f8-a760499005cf",
+            "model": "AP45-US",
+            "text": "Using Radsec server \"1.1.1.222:2083\"",
+            "type_code": 52
+        }
+        {
+            "wlan_id": "983c8169-25fe-455c-a62a-5cac1224607e",
+            "type": "AP_RADSEC_RECOVERY",
+            "device_type": "ap",
+            "version": 1,
+            "apfw": "apfw-0.6.19227-frey-ab55",
+            "ap": "5c5b355005be",
+            "mac": "5c5b355005be",
+            "timestamp": 1654148714.073,
+            "org_id": "625aba64-fe72-4b14-8985-cbf31ec3d78a",
+            "site_id": "ec9d1e85-af24-43f9-8d65-d620580e8631",
+            "model": "AP43-US",
+            "text": "TLS established successfully with radsec server \"a268dc897b17c4c08af1eba3118580c3-8c2ed33f47d43bad.elb.us-west-2.amazonaws.com:2083\" (10.2.17.224:57276->52.27.123.97:2083)",
+            "type_code": 59
+        }
+        '''
+        tmp = self.event_type.replace("AP_", "").replace("_", " ")
+        self.text  = f"{tmp} for AP \"{self.device_name}\" (MAC: {self.device_mac})"
+        if self.site_name:
+            self.text += f" on site \"{self.site_name}\""
+        self.info.append(f"*AP Firmware*: {self.apfw}")
+        self.info.append(f"*AP Model*: {self.model}")
+        self.info.append(f"*Details*: {self.event_text}")
+        self.info.append(f"*Code*: {self.type_code}")

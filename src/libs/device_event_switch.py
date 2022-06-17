@@ -88,6 +88,8 @@ class SwitchEvent(CommonEvent):
             self._sw_dot1x_user()
         elif self.event_type == "SW_RADIUS_SERVER_UNREACHABLE":
             self._sw_radius_unreachable()
+        elif self.event_type == "SW_ALARM_POE_CONTROLLER_UPGRADE_AVAILABLE":
+            self._poe_upgrade_available()
         else:
             self._common()
 

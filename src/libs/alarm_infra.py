@@ -8,6 +8,7 @@ class InfraAlarm(CommonAlarm):
         self.model = event.get("model", None)
         self.fw_version = event.get("fw_version", None)
         self.port_ids = event.get("port_ids", None)
+        self.count = event.get("count", None)
         self.servers = event.get("servers", [])
         self.ssids = event.get("ssids", [])
         self.vlans = event.get("vlans", [])
@@ -37,7 +38,13 @@ class InfraAlarm(CommonAlarm):
     def _infra(self):
         '''
         '''
-        self.text = f"{self.alarm_type.replace('_', ' ').upper()} detected on site {self.site_name}"
+        self.text = f"{self.alarm_type.replace('_', ' ').upper()}"
+        if self.count:
+            if self.count == 1:
+                self.text += " 1 time"
+            else:
+                self.text += f" {self.count} times"
+        self.text +=" on site {self.site_name}"
         if self.hostnames:
             self.info.append(
                 f"*HOSTNAMES*: {', '.join(self.hostnames)}")

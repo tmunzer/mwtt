@@ -306,6 +306,21 @@ class CommonEvent():
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
 
+    def _upgrade_by_mist(self):
+        '''
+{
+            "org_id": "c080ce4d-4e35-4373-bdc4-08df15d257f5",
+            "site_id": "1df889ad-9111-4c0e-a00b-8a008b83eb68",
+            "type": "GW_UPGRADE_BY_MIST",
+            "mac": "0c8126c6ff6c",
+            "text": "to version 19.3R1.8"
+        }
+        '''
+        self.text = f"FIRMWARE UPGRADE REQUESTED for the {self.device_text} \"{self.device_name}\" (MAC: {self.device_name})"
+        if self.site_name:
+            self.text += f" on site \"{self.site_name}\""
+        self.text += f" {self.event_text}"
+
     def _config_changed_by_user(self):
         '''
 {
@@ -569,3 +584,19 @@ class CommonEvent():
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
         self.text += "has been REJECTED"
+
+
+    def _poe_upgrade_available(self):
+        """
+        {
+            "type": "GW_ALARM_POE_CONTROLLER_UPGRADE_AVAILABLE",
+            "site_id": "f688779c-e335-4f88-8d7c-9c5e9964528b",
+            "org_id": "b4e16c72-d50e-4c03-a952-a3217e231e2c",
+            "mac": "1c9c8cba2e7f",
+            "alarm_class": "Major",
+            "text": "POE firmware upgrade available"
+        }
+        """
+        self.text = f"POE CONTROLLER UPGRADE AVAILABLE for {self.device_text} \"{self.device_name}\" (MAC: {self.device_mac})"
+        if self.site_name:
+            self.text += f" on site \"{self.site_name}\""
