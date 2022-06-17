@@ -90,7 +90,7 @@ class MxEdgeEvent(CommonEvent):
         '''
         self.text = f"Mist Edge CONFIGURATION CHANGED by user"
         if self.device_id and self.device_id.startswith("00000000-0000-0000-1000"):
-            self.text += " on \"{self.device_name}\" (MAC: {self.device_mac})"
+            self.text += f" on \"{self.device_name}\" (MAC: {self.device_mac})"
         if self.site_name:
             self.text += f" on site \"{self.site_name}\""
 
