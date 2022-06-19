@@ -1,4 +1,5 @@
 from .logger import Console
+console = Console("audits")
 
 def audit(mist_host, approved_admins, audit_channels, event):
     mist_dashboard = mist_host.replace("api", "manage")
@@ -114,4 +115,6 @@ def audit(mist_host, approved_admins, audit_channels, event):
         "actions": actions
     }
     #text = [f"Admin: {admin} (IP: {src_ip})", f"Action: {message}"]
+    console.info("Processing done")
+    console.debug(f"Result: {data}")
     return data

@@ -13,6 +13,7 @@ class CommonAlarm():
     '''
 
     def __init__(self, mist_host, alarm_channels, event):
+        self.console = Console("alarms")
 
         self.alarm_channels = alarm_channels
         self.device_types = {

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from .logger import Console
-
-
+console = Console("device-updowns")
+    
 def device_updown(mist_host, updown_channels, event):
 
     mist_dashboard = mist_host.replace("api", "manage")
@@ -55,7 +55,7 @@ def device_updown(mist_host, updown_channels, event):
         "info": info,
         "actions": actions
     }
-    #text = [f"Admin: {admin} (IP: {src_ip})", f"Action: {message}"]
+    
     console.info("Processing done")
     console.debug(f"Result: {data}")
     return data

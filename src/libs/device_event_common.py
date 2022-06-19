@@ -13,8 +13,8 @@ class CommonEvent():
     '''
 
     def __init__(self, mist_host, event_channels, event):
+        self.console = Console("device-events")
         self.event_channels = event_channels
-        self.console = Console("event")
         self.device_types = {
             "ap": {"short": "AP_", "text": "AP", "insight": "device"},
             "switch": {"short": "SW_", "text": "Switch", "insight": "juniperSwitch"},
