@@ -5,6 +5,7 @@ from .alarm_common import CommonAlarm
 class InfraAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
+        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
         self.model = event.get("model", None)
         self.fw_version = event.get("fw_version", None)
         self.port_ids = event.get("port_ids", None)
@@ -18,7 +19,6 @@ class InfraAlarm(CommonAlarm):
             self.reason = event.get("reasons")
         else:
             self.reason = None
-        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
 
     def _process(self):
         if self.alarm_type in [

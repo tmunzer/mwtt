@@ -4,11 +4,11 @@ from .alarm_common import CommonAlarm
 class SecurityAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
+        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
         self.wlan_ids = event.get("wlan_ids", [])
         self.bssids = event.get("bssids", [])
         self.ssids = event.get("ssids", [])
         self.client_macs = event.get("client_macs", [])
-        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
 
     def _process(self):
         if self.alarm_type == "secpolicy_violation":

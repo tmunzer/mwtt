@@ -13,8 +13,8 @@ class CommonAlarm():
     '''
 
     def __init__(self, mist_host, alarm_channels, event):
-        self.console = Console("alarm")
 
+        self.alarm_channels = alarm_channels
         self.device_types = {
             "aps": {"short": "AP_", "text": "AP", "insight": "device", "type": "ap"},
             "switches": {"short": "SW_", "text": "Switch", "insight": "juniperSwitch", "type": "switch"},
@@ -54,9 +54,7 @@ class CommonAlarm():
         self.t_stop = int(datetime.timestamp(d_stop))
         self.t_start = int(datetime.timestamp(d_start))
 
-        self._message_channel(alarm_channels)
-        self._actions()
-        self._process()
+
 
     def get(self):
         '''
@@ -69,7 +67,10 @@ class CommonAlarm():
                 text        message text
                 info        message additional info
                 actions     message buttons
-        '''
+        '''        
+        self._message_channel(self.alarm_channels)
+        self._actions()
+        self._process()
         data = {
             "channel": self.channel,
             "title": self.title,

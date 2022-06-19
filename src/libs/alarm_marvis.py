@@ -5,14 +5,13 @@ from .alarm_common import CommonAlarm
 class MarvisAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
+        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
         self.status = event.get("status", "Unknown")
         self.category = event.get("category")
         self.root_cause = event.get("root_case")
         self.suggestion = event.get("suggestion", "Unknown")
         self.impacted_entities = event.get("impacted_entities", [])
 
-
-        CommonAlarm.__init__(self, mist_host, alarm_channels, event)
 
     def _process(self):
         if self.alarm_type in [
