@@ -25,9 +25,9 @@ class MxEdgeEvent(CommonEvent):
         if "usage" in event:
             self.severity = event["usage"].get("severity")
             self.resource = event["usage"].get("resource")
-        elif "sys_info.usage" in event:
-            self.severity = event["sys_info.usage"].get("severity")
-            self.resource = event["sys_info.usage"].get("resource")
+        elif "sys_info" in event and "usage" in event["sys_info"]:
+            self.severity = event["sys_info"]["usage"].get("severity")
+            self.resource = event["sys_info"]["usage"].get("resource")
         else:
             self.severity = "Unknown"
             self.resource = "Unknown"
@@ -455,9 +455,9 @@ class MxEdgeEvent(CommonEvent):
         tmp = self.event_type.replace("ME_PACKAGE_", "").replace("_", " ")
         self.text = f"Mist Edge package {self.package} {tmp}"
         if self.from_version:
-            self.text += f"from {self.from_version}"
+            self.text += f" from {self.from_version}"
         if self.to_version:
-            self.text += f"to {self.to_version}"
+            self.text += f" to {self.to_version}"
         if self.device_name:
             self.text += f" on \"{self.device_name}\""
         if self.site_name:
