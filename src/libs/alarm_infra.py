@@ -44,7 +44,7 @@ class InfraAlarm(CommonAlarm):
                 self.text += " 1 time"
             else:
                 self.text += f" {self.count} times"
-        self.text +=" on site {self.site_name}"
+        self.text += f" on site {self.site_name}"
         if self.hostnames:
             self.info.append(
                 f"*HOSTNAMES*: {', '.join(self.hostnames)}")
