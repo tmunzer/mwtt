@@ -6,6 +6,7 @@ class MarvisAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
         CommonAlarm.__init__(self, mist_host, alarm_channels, event)
+        self.group = "marvis"
         self.status = event.get("status", "Unknown")
         self.category = event.get("category")
         self.root_cause = event.get("root_case")

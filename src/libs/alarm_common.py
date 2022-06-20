@@ -36,7 +36,7 @@ class CommonAlarm():
         self.message = ""
 
         self.event_id = self.event.get("id", None)
-        self.group = self.event.get("group", None)
+        self.group = self.event.get("group", "any type")
         self.alarm_type = self.event.get("type", None)
         self.timestamp = self.event.get("timestamp")
 
@@ -113,11 +113,11 @@ class CommonAlarm():
 
     def _actions(self):
         if self.site_id:
-            site_url = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!alerts/site/{self.site_id}/customDate/{self.timestamp}/{self.timestamp}/true/{self._alarm_level('critical')}/{self._alarm_level('warn')}/{self._alarm_level('warn')}/{self.org_id}/{ self._alarm_level('info')}"
+            site_url = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!alerts/site/{self.site_id}/customDate/{int(self.timestamp)-3600}/{int(self.timestamp)+30}/true/{self.group}/true/true/true/{self.org_id}"
             self.actions.append(
                 {"tag": "alarm", "text": "See Alarm", "url": site_url})
         else:
-            org_url = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!alerts/org/{self.org_id}/customDate/{self.timestamp}/{self.timestamp}/true/{self.group}/{self._alarm_level('critical')}/{self._alarm_level('warn')}/{self._alarm_level('info')}/{self.org_id}"
+            org_url = f"https://{self.mist_dashboard}/admin/?org_id={self.org_id}#!alerts/org/{self.org_id}/customDate/{int(self.timestamp)-3600}/{int(self.timestamp)+30}/true/{self.group}/true/true/true/{self.org_id}"
             self.actions.append(
                 {"tag": "alarm", "text": "See Alarm", "url": org_url})
 

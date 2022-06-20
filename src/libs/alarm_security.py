@@ -5,6 +5,7 @@ class SecurityAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
         CommonAlarm.__init__(self, mist_host, alarm_channels, event)
+        self.group = "security"
         self.wlan_ids = event.get("wlan_ids", [])
         self.bssids = event.get("bssids", [])
         self.ssids = event.get("ssids", [])

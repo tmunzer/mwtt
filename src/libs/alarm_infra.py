@@ -6,6 +6,7 @@ class InfraAlarm(CommonAlarm):
 
     def __init__(self, mist_host, alarm_channels, event):
         CommonAlarm.__init__(self, mist_host, alarm_channels, event)
+        self.group = "infrastructure"
         self.model = event.get("model", None)
         self.fw_version = event.get("fw_version", None)
         self.port_ids = event.get("port_ids", None)
