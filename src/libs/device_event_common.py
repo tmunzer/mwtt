@@ -108,8 +108,6 @@ class CommonEvent():
             self.channel = event_channels[self.event["type"]]
 
     def _actions(self):
-        print("action")
-        print(self.event.get('audit_id'))
         if self.device_type:
             if self.audit_id:
                 self.info.append("Check the audit logs for more details.")

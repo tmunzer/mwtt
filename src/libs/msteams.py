@@ -70,8 +70,5 @@ def send_manual_message(config, topic,  title, text, info=None, actions=None, ch
     msteam_url = config.get("url", {}).get(channel, default_url)
     if msteam_url:
         data = json.dumps(body)
-        # data = data.encode("ascii")
-        # print(msteam_url)
-        # print(data)
         requests.post(msteam_url, headers={
                         "Content-type": "application/json"}, data=data)
