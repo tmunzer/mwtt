@@ -23,7 +23,7 @@ For some topics, if they are enable at the Org and Site(s) levels, you may recei
 
 This will tell Mist Cloud to send events (like AP Connected/Disconnected) to the MWTT FQDN. As of today (January, 2020), some topics like the "device-events" topics cannot be enabled directly from the Mist UI. This configuration can be done through Mist APIs. You can use the web UI to manage APIs by reaching https://api.mist.com/api/v1/orgs/:your_org_id/webhooks or https://api.eu.mist.com/api/v1/orgs/:your_org_id/webhooks (Be sure to replace ":your_org_id" first). Then you will be able to create a new webhook by using the following settings:
 
-`
+```json
     {
         "url": "https://<mwtt_server_fqdn>/<mwtt_url>",
         "topics": [
@@ -31,7 +31,7 @@ This will tell Mist Cloud to send events (like AP Connected/Disconnected) to the
         ],
         "enabled": true
     }
-   `
+   ```
 
 
 # features:
