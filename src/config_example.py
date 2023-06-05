@@ -3,17 +3,11 @@
 # Configuration to receive webhooks from Mist Cloud and to send API
 # requests to Mist Cloud
 #
-# apitoken:         apitoken from Mist Cloud to sent API requests
-# mist_cloud:       api.mist.com if you are using US Cloud, or
-#                   api.eu.mist.com if you are using EU Cloud
 # server_uri:       uri where you want to receive wehbooks messages
 #                   on this server.
 # mist_secret:      the webhook secret configuration on the Mist Cloud
 #                   to secure webhook reception
 mist_conf = {
-    # file deepcode ignore HardcodedNonCryptoSecret: This is just an example
-    "apitoken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "mist_host": "manage.mist.com",
     "mist_secret": None,
     "server_uri": "/webhooks",
     "site_id_ignored": [],
