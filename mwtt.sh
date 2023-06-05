@@ -58,7 +58,7 @@ function generate_docker_compose_ngninx # $XX_NAME
 version: '3.5'
 services:    
     nginx:
-        image: "jwilder/nginx-proxy"
+        image: "jwilder/nginx-proxy:1.2.3"
         container_name: "mist-nginx"
         ports:
             - "443:443"
