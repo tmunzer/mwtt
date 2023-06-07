@@ -3,11 +3,14 @@
 # Configuration to receive webhooks from Mist Cloud and to send API
 # requests to Mist Cloud
 #
+# mist_host:        Mist Cloud Host (e.g., api.mist.com). Used to generate
+#                   the Teams/Slack buttons to get access to the Mist dashboard
 # server_uri:       uri where you want to receive wehbooks messages
 #                   on this server.
 # mist_secret:      the webhook secret configuration on the Mist Cloud
 #                   to secure webhook reception
 mist_conf = {
+    "mist_host": "api.mist.com",
     "mist_secret": None,
     "server_uri": "/webhooks",
     "site_id_ignored": [],

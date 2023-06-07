@@ -52,6 +52,7 @@ def load_conf(value):
 
 def display_conf():
     """Display config"""
+    print(f"Mist Hist       : {MIST_HOST}")
     print(f"Webhook Secret  : {MIST_SECRET}")
     print(f"MWTT URI        : {SERVER_URI}")
     print(f"Ignored Sites   : {SITE_ID_IGNORED}")
@@ -62,6 +63,7 @@ def display_conf():
 ###########################
 # ENTRY POINT
 print("Loading configuration ".center(80, "_"))
+MIST_HOST = load_conf("mist_host")
 MIST_SECRET = load_conf("mist_secret")
 SERVER_URI = load_conf("server_uri")
 SITE_ID_IGNORED = load_conf("site_id_ignored")
