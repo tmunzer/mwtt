@@ -106,7 +106,7 @@ In this case, you can choose to
 When using the command `docker-compose up`, the logs are displayed, and using `Crtl + C` will stop the containers. If you want to start and run the containers in background, please use the command `docker-compose up -d`
 
 ## Source Code Deployment
-It is possible to start the application directly from the source code. This is the prefered way if you want to bring modification on the code.
+It is possible to start the application directly from the source code. This is the prefered way if you want to bring modification to the code.
 
 ### Step by step procedure
 1. install [Python](https://www.python.org/) and Pip
