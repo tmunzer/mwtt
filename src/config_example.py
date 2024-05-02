@@ -21,7 +21,7 @@ log_level = "INFO"
 # You can create more slack / msteams channel urls depending on your needs, you just need to be sure each
 # channel has a unique name
 slack_conf = {
-    "enabled": True,
+    "enabled": False,
     "default_url": "https://hooks.slack.com/services/XXXXXXXX/XXXXXXXXX/XXXXXXXXXXX4",
     "url": {
         "debug": "https://hooks.slack.com/services/XXXXXXXX/XXXXXXXXX/XXXXXXXXXXX1",
@@ -32,13 +32,25 @@ slack_conf = {
 }
 
 msteams_conf = {
-    "enabled": True,
+    "enabled": False,
     "default_url": "https://outlook.office.com/webhook/xxxxxxxxxxxx/IncomingWebhook/xxxxxxxxxxx/xxxxxxxxxxx",
     "url": {
         "debug": "https://outlook.office.com/webhook/xxxxxxxxxxxx/IncomingWebhook/xxxxxxxxxxx/xxxxxxxxxxx",
         "info": "https://outlook.office.com/webhook/xxxxxxxxxxxx/IncomingWebhook/xxxxxxxxxxx/xxxxxxxxxxx",
         "warning": "https://outlook.office.com/webhook/xxxxxxxxxxxx/IncomingWebhook/xxxxxxxxxxx/xxxxxxxxxxx",
         "critical": "https://outlook.office.com/webhook/xxxxxxxxxxxx/IncomingWebhook/xxxxxxxxxxx/xxxxxxxxxxx"
+    }
+}
+
+
+gchat_conf = {
+    "enabled": False,
+    "default_url": "https://chat.googleapis.com/v1/spaces/xxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "url": {
+        "warning": "https://chat.googleapis.com/v1/spaces/xxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "info": "https://chat.googleapis.com/v1/spaces/xxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "debug": "https://chat.googleapis.com/v1/spaces/xxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "critical": "https://chat.googleapis.com/v1/spaces/xxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     }
 }
 

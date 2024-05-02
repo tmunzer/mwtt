@@ -10,6 +10,7 @@ sys.path.append(SCRIPT_DIR)
 """System modules"""
 from libs import slack as Slack
 from libs import msteams as Teams
+from libs import google_chat as Gchat
 from libs.audit import audit
 from libs.device_event import device_event
 from libs.mxedge_events import mxedge_event
@@ -30,7 +31,7 @@ def _get_time(event):
     return f"{dt} UTC"
 
 
-def _process_event(topic, event, mist_conf, channels, slack_conf, msteams_conf):
+def _process_event(topic, event, mist_conf, channels, slack_conf, msteams_conf, gchat_conf):
     """Process new event"""
 
     if topic == "audits":
@@ -73,7 +74,7 @@ def _process_event(topic, event, mist_conf, channels, slack_conf, msteams_conf):
 
     # dt = _get_time(event)
 
-    if slack_conf["enabled"]:
+    if slack_conf.get("enabled"):
         Slack.send_manual_message(
             slack_conf,
             topic,
@@ -83,7 +84,7 @@ def _process_event(topic, event, mist_conf, channels, slack_conf, msteams_conf):
             data["actions"],
             data["channel"]
         )
-    if msteams_conf["enabled"]:
+    if msteams_conf.get("enabled"):
         Teams.send_manual_message(
             msteams_conf,
             topic,
@@ -93,9 +94,19 @@ def _process_event(topic, event, mist_conf, channels, slack_conf, msteams_conf):
             data["actions"],
             data["channel"]
         )
+    if gchat_conf.get("enabled"):
+        Gchat.send_manual_message(
+            gchat_conf,
+            topic,
+            data["title"],
+            data["text"],
+            data["info"],
+            data["actions"],
+            data["channel"]
+        )
 
 
-def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
+def new_event(req, mist_conf, channels, slack_conf, msteams_conf, gchat_conf):
     '''
     Start to process new webhook message
     request         flask request
@@ -144,6 +155,7 @@ def new_event(req, mist_conf, channels, slack_conf, msteams_conf):
             mist_conf,
             channels,
             slack_conf,
-            msteams_conf
+            msteams_conf,
+            gchat_conf
         )
     return '', 200

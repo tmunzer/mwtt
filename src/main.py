@@ -8,6 +8,7 @@ from flask import request
 from config import mist_conf
 from config import slack_conf
 from config import msteams_conf
+from config import gchat_conf
 from config import event_channels
 from config import updown_channels
 from config import alarm_channels
@@ -58,6 +59,10 @@ def display_conf():
     print(f"Ignored Sites   : {SITE_ID_IGNORED}")
     print(f"Approved Admins : {APPROVED_ADMINS}")
     print(f"Debug Mode      : {DEBUG}")
+    print()
+    print(f"SLACK           : {slack_conf.get('enabled', False)}")
+    print(f"MS Teams        : {msteams_conf.get('enabled', False)}")
+    print(f"Google Chat     : {gchat_conf.get('enabled', False)}")
 
 
 ###########################
@@ -89,7 +94,8 @@ def postJsonHandler():
             "audits": audit_channels
         },
         slack_conf,
-        msteams_conf
+        msteams_conf,
+        gchat_conf
     )
     delta = datetime.now() - start
     console.info(f"Processing time {delta.seconds}.{delta.microseconds}s")

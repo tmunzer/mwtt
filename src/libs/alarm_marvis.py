@@ -45,7 +45,7 @@ class MarvisAlarm(CommonAlarm):
             self.info.append(f"*ROOT CAUSE*: {self.root_cause}")
         if self.suggestion:
             self.info.append(f"*SUGGESTION*: {self.suggestion}")
-        self.info.append(f"*IMPACTED ENTITIES:* {len(self.impacted_entities)}")
+        self.info.append(f"*IMPACTED ENTITIES*: {len(self.impacted_entities)}")
         for entry in self.impacted_entities:
             tmp = ""
             for key in entry:

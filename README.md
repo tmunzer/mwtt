@@ -29,6 +29,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * Send the messages to different MS Teams channels depending on the severity level (can be configured):
 <img src="https://github.com/tmunzer/mwtt/raw/master/._readme/img/msteams_channel.png" width="50%">
 
+* Send the messages to different Google Chat channels depending on the severity level (can be configured):
+<img src="https://github.com/tmunzer/mwtt/raw/master/._readme/img/gchat_channel.png" width="50%">
+
 # Mist Configuration
 ## Webhook Configuration
 To get this script working, you will have to manually configure webhooks on your Mist account and enable the "audits", "alarms, "device-events" and/or "device-updowns" topics. This configuration can be done at the Organization level, or at the site level, depending on your needs.
