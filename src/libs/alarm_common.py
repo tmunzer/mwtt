@@ -96,15 +96,14 @@ class CommonAlarm():
         '''
         try:
             self.title = f"UNKOWN {self.group} ALARM for site {self.site_name}: {self.alarm_type}"
-            for entry in self.event:
-                if not entry in ["org_id", "site_id"]:
-                    if isinstance(self.event[entry], list):
-                        self.info.append(f"{entry}: {', '.join(self.event[entry])}")
+            for k, v in self.event.items():
+                if not k in ["org_id", "site_id"]:
+                    if isinstance(v, list):
+                        self.info.append(f"{k}: {', '.join(v)}")
                     else:
-                        self.info.append(f"{entry}: {self.event[entry]}")
+                        self.info.append(f"{k}: {v}")
         except:
             self.console.error(f"Unable to process webhook message: {self.event}")
-            print("", exc_info=True)
 
     def _alarm_level(self, severity):
         return severity == self.severity
